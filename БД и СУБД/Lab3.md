@@ -1,6 +1,32 @@
+# Лаба 3
+
 24.01.20
 
-# Запросы
+- [Лаба 3](#Лаба-3)
+  - [Запросы](#Запросы)
+  - [Сортировка](#Сортировка)
+  - [Сравнение](#Сравнение)
+    - [Оператор LIKE](#Оператор-like)
+  - [Операции](#Операции)
+    - [UNION](#union)
+    - [INTERSECT](#intersect)
+    - [EXCEPT](#except)
+    - [LIMIT](#limit)
+  - [Вывод информации о животных, информация о которых есть в таблице ресурсов](#Вывод-информации-о-животных-информация-о-которых-есть-в-таблице-ресурсов)
+  - [Подзапросы](#Подзапросы)
+  - [Соединения](#Соединения)
+    - [INNER JOIN](#inner-join)
+    - [CROSS JOIN](#cross-join)
+    - [LEFT OUTER JOIN](#left-outer-join)
+    - [RIGHT OUTER JOIN](#right-outer-join)
+    - [FULL OUTER JOIN](#full-outer-join)
+  - [Вычисления и группировки](#Вычисления-и-группировки)
+    - [Вычисления](#Вычисления)
+    - [Группировки](#Группировки)
+  - [Do's and dont's](#dos-and-donts)
+  - [Заметки](#Заметки)
+
+## Запросы
 
 ```sql
 SELECT *
@@ -9,7 +35,7 @@ WHERE number < 1000 AND number < 10
     OR number IN (100, 200)
 ```
 
-# Сортировка
+## Сортировка
 
 ```sql
 SELECT *
@@ -27,7 +53,7 @@ WHERE number < 1000 AND number < 10
 ORDER BY number DESC, id -- number по убыванию, id по возрастанию
 ```
 
-# Сравнение
+## Сравнение
 
 ```sql
 SELECT *
@@ -35,7 +61,7 @@ FROM municipal_units
 WHERE name = 'ГО г. Кунгур' -- строки пишутся в одинарных кавычках
 ```
 
-## Оператор LIKE
+### Оператор LIKE
 
 ```sql
 SELECT *
@@ -62,9 +88,9 @@ WHERE address LIKE '___000%
 
 _ - один любой символ.
 
-# Операции
+## Операции
 
-## UNION
+### UNION
 
 Объединение множеств первого и второго запросов
 
@@ -104,7 +130,7 @@ WHERE address LIKE '___000%'
 ORDER BY id desc)
 ```
 
-## INTERSECT
+### INTERSECT
 
 Пересечение.
 
@@ -118,7 +144,7 @@ FROM municipal_units
 WHERE address LIKE '___000%'
 ```
 
-## EXCEPT
+### EXCEPT
 
 Вычитание.
 
@@ -132,7 +158,7 @@ FROM municipal_units
 WHERE address LIKE '___000%'
 ```
 
-## LIMIT
+### LIMIT
 
 Возвращает n элементов.
 
@@ -165,9 +191,10 @@ LIMIT 10 -- первые 10
 OFFSET 20 -- пропустить 20
 ```
 
-# Вывод информации о животных, информация о которых есть в таблице ресурсов
+## Вывод информации о животных, информация о которых есть в таблице ресурсов
 
 1. Выберем те значения, идентификаторы которых принадлежат идентификаторам из таблицы ресурсов:
+
     ```sql
     SELECT name
     FROM animals
@@ -189,6 +216,7 @@ OFFSET 20 -- пропустить 20
     ```
 
 2. Возьмем названия тех животных, для которых есть хотя бы одна строчка в таблице ресурсов, которая относится к данному животному:
+
     ```sql
     SELECT name
     FROM animals
@@ -216,6 +244,7 @@ OFFSET 20 -- пропустить 20
     ```
 
 3. Дерево
+
     ```sql
     SELECT DISTINCT name -- DISTINCT убирает повторы
     FROM animals
@@ -243,9 +272,10 @@ OFFSET 20 -- пропустить 20
 
     Сложно инвертировать
 
-# Подзапросы
+## Подзапросы
 
 1. Отсортировать таблицу
+
     ```sql
     SELECT *
     FROM resources
@@ -258,6 +288,7 @@ OFFSET 20 -- пропустить 20
     Если элементов несколько, то вернет случайное.
 
 2. Больше или равно. Взять численность, которая не меньше всех других.
+
     ```sql
     SELECT *
     FROM resources
@@ -270,6 +301,7 @@ OFFSET 20 -- пропустить 20
     Вернет все подходящие элементы (возможно, больше 1).
 
 3. Больше. Подзапросы
+
     ```sql
     SELECT *
     FROM resources
@@ -302,6 +334,7 @@ OFFSET 20 -- пропустить 20
     Если будет несколько строк с одинаковым значением, то не вернется ни одна строка.
 
 4. Максимум. Взять максимальное значение
+
     ```sql
     SELECT *
     FROM resources
@@ -311,9 +344,9 @@ OFFSET 20 -- пропустить 20
     )
     ```
 
-# Соединения
+## Соединения
 
-## INNER JOIN
+### INNER JOIN
 
 ```sql
 SELECT *
@@ -321,7 +354,7 @@ FROM animals
 INNER JOIN resources ON animals.id = resources.animal_id
 ```
 
-## CROSS JOIN
+### CROSS JOIN
 
 Декартово произведение - каждая строка соединяется с каждой строкой.
 
@@ -360,7 +393,7 @@ FROM animals
 INNER JOIN resources ON TRUE
 ```
 
-## LEFT OUTER JOIN
+### LEFT OUTER JOIN
 
 Левая строчка останется, даже если недосоединилась с правой.
 
@@ -372,7 +405,7 @@ LEFT OUTER JOIN resources ON animals.id = resources.animal_id
 
 Мы не теряем данные из левой таблицы, если нет соответствия в правой таблице.
 
-## RIGHT OUTER JOIN
+### RIGHT OUTER JOIN
 
 ```sql
 SELECT *
@@ -380,7 +413,7 @@ FROM animals
 RIGHT OUTER JOIN resources ON animals.id = resources.animal_id
 ```
 
-## FULL OUTER JOIN
+### FULL OUTER JOIN
 
 ```sql
 SELECT *
@@ -403,9 +436,9 @@ LEFT OUTER JOIN resources ON animals.id = resources.animal_id
 FULL OUTER JOIN municipal_units ON resources.municipal_unit_id = municipal_units.id
 ```
 
-# Вычисления и группировки
+## Вычисления и группировки
 
-## Вычисления
+### Вычисления
 
 ```sql
 SELECT 2 + 2 -- 4
@@ -446,7 +479,7 @@ SELECT count(DISTINCT animal_id)
 FROM resources
 ```
 
-## Группировки
+### Группировки
 
 Хотим посчитать общее количество животных:
 
@@ -484,7 +517,7 @@ HAVING SUM(number) > 10000
 ORDER BY SUM(number) DESC -- можно сортировать после GROUP BY
 ```
 
-# Do's and dont's
+## Do's and dont's
 
 1. Не использовать "SELECT *", т. к. изменения в БД могут сломать программу.
 
@@ -492,6 +525,6 @@ ORDER BY SUM(number) DESC -- можно сортировать после GROUP 
 
 3. Не стоит обращаться к БД многократно без веской причины.
 
-# Заметки
+## Заметки
 
 1. RIGHT OUTER JOIN отсутствует в SQLite. Надо использовать LEFT OUTER JOIN и поменять таблицы местами.
