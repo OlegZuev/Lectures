@@ -9,12 +9,13 @@
 7 лаб
 
 vlanin@live.com
+
 Ланин Вячеслав Владимирович
 
 Moodle.
 
 ## Требования
 
-Visual Studio
-IntelliJ Idea
-Azure
+- Visual Studio
+- IntelliJ Idea
+- Azure
